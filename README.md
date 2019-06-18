@@ -1,6 +1,6 @@
-# cert
+# fetch-tls-certs
 
-[![Build Status](https://travis-ci.org/genkiroid/cert.svg?branch=master)](https://travis-ci.org/genkiroid/cert)
+[![Build Status](https://travis-ci.org/davidwalter0/fetch-tls-certs.svg?branch=master)](https://travis-ci.org/davidwalter0/fetch-tls-certs)
 
 Get server's certificate information.
 
@@ -10,16 +10,16 @@ For Mac it provide Homebrew integration.
 Please install like following.
 
 ```sh
-$ brew tap genkiroid/homebrew-cert
+$ brew tap davidwalter0/homebrew-cert
 $ brew install cert
 ```
 
-For other platforms, Precompiled binaries for released versions are available in the [releases](https://github.com/genkiroid/cert/releases) page.
+For other platforms, Precompiled binaries for released versions are available in the [releases](https://github.com/davidwalter0/fetch-tls-certs/releases) page.
 
 Or `go get`.
 
 ```sh
-$ go get github.com/genkiroid/cert/...
+$ go get github.com/davidwalter0/fetch-tls-certs/...
 ```
 
 ## Usage
@@ -174,9 +174,9 @@ Issuer: DigiCert High Assurance EV Root CA
 
 ## License
 
-[MIT](https://github.com/genkiroid/cert/blob/master/LICENSE)
+[MIT](https://github.com/davidwalter0/fetch-tls-certs/blob/master/LICENSE)
 
 ## Author
 
-[genkiroid](https://github.com/genkiroid)
+[davidwalter0](https://github.com/davidwalter0)
 

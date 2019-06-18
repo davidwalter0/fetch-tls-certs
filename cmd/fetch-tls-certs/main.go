@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/genkiroid/cert"
+	cert "github.com/davidwalter0/fetch-tls-cert"
 )
 
 var version = ""
