@@ -1,11 +1,15 @@
 package main
 
 import (
+	"bytes"
+	"encoding/pem"
 	"flag"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 
-	cert "github.com/davidwalter0/fetch-tls-cert"
+	"github.com/davidwalter0/fetchhostcerts"
 )
 
 var version = ""
@@ -37,17 +41,36 @@ func main() {
 		return
 	}
 
-	var certs cert.Certs
+	var certs fetchhostcerts.Certs
 	var err error
 
-	cert.SkipVerify = skipVerify
-	cert.UTC = utc
-	cert.TimeoutSeconds = timeout
+	fetchhostcerts.SkipVerify = skipVerify
+	fetchhostcerts.UTC = utc
+	fetchhostcerts.TimeoutSeconds = timeout
 
-	certs, err = cert.NewCerts(flag.Args())
+	certs, err = fetchhostcerts.NewCerts(flag.Args())
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
+	}
+	for _, certficate := range certs {
+		var pemBytes bytes.Buffer
+		for _, cert := range certficate.CertChain() {
+			if err := pem.Encode(&pemBytes, &pem.Block{Type: "CERTIFICATE", Bytes: cert.Raw}); err != nil {
+				if err != nil {
+					log.Println("CertChainToPEM", err)
+					continue
+				}
+			}
+			f, err := ioutil.TempFile(".", certficate.DomainName+".*")
+			if err != nil {
+				log.Println("Tempfile", err)
+				continue
+			}
+			if n, err := f.Write(pemBytes.Bytes()); err != nil {
+				log.Printf("Wrote %d of %d Write", n, pemBytes.Len(), err)
+			}
+		}
 	}
 
 	if template == "" {
@@ -62,7 +85,7 @@ func main() {
 		return
 	}
 
-	if err := cert.SetUserTempl(template); err != nil {
+	if err := fetchhostcerts.SetUserTempl(template); err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}

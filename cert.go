@@ -1,4 +1,4 @@
-package cert
+package fetchhostcerts
 
 import (
 	"bytes"
@@ -86,7 +86,7 @@ var serverCert = func(host, port string) ([]*x509.Certificate, string, error) {
 		InsecureSkipVerify: SkipVerify,
 	})
 	if err != nil {
-		return []*x509.Certificate{&x509.Certificate{}}, "", err
+		return []*x509.Certificate{{}}, "", err
 	}
 	defer conn.Close()
 
